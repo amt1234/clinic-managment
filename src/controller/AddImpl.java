@@ -307,7 +307,6 @@ public class AddImpl implements Add {
 	@Override
 	public void takeAppointment() throws JsonGenerationException, JsonMappingException, IOException {
 		Appointment appointment = new Appointment();
-		Doctor doctor = new Doctor();
 		System.out.println("Enter name of Patient for appointment");
 		appointment.setPatientname(Utility.inputString());
 		System.out.println("Enter patient id");
@@ -329,9 +328,9 @@ public class AddImpl implements Add {
 					&& (temp.getDoctor_id() == (appointment.getDoctorid()))) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
-				if (doctor.getNopatient() <=5) {
+				if (temp.getNopatient() <=5) {
 					System.out.println("Appointment fix..");
-					doctor.setNopatient(doctor.getNopatient()+1);
+					temp.setNopatient(temp.getNopatient()+1);
 //					int n=doctor.getNopatient();
 //					doctor.setNopatient(n+1);
 //					System.out.println(n);
@@ -341,7 +340,7 @@ public class AddImpl implements Add {
 					break;
 				} else {
 					System.out.println("Doctor is not available you try for next day..");
-					doctor.setNopatient(0);
+					temp.setNopatient(0);
 					objectMapper.writeValue(file, doctorlist);
 				}
 			}
