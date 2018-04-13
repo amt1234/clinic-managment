@@ -14,7 +14,6 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.JavaType;
-import org.codehaus.jackson.type.TypeReference;
 
 import com.bridgeit.utility.Utility;
 import com.bridgeit.programs.Appointment;
@@ -30,10 +29,12 @@ public class AddImpl implements Add {
 	private List<Doctor> doctorlist = new ArrayList<>();
 	private List<Appointment> appointmentlist = new ArrayList<>();
 	static int count = 0;
-	File file;
-	// List<String> lines = Files.readAllLines(Paths.get(file));
 	static String jsonArray;
+	File file;
 
+	/*
+	 * @see controller.Add#addDoctor() add doctors
+	 */
 	@Override
 	public void addDoctor() throws Exception {
 		Doctor doctor = new Doctor();
@@ -48,7 +49,6 @@ public class AddImpl implements Add {
 		System.out.println("Enter Doctor Availiability");
 		doctor.setAvailability(Utility.inputString());
 		doctorlist.add(doctor);
-		// writeFile(file, Doctor[].class);
 
 		try {
 
@@ -66,6 +66,9 @@ public class AddImpl implements Add {
 
 	}
 
+	/*
+	 * @see controller.Add#addPatients() add patients
+	 */
 	@Override
 	public void addPatients() {
 		Patient patient = new Patient();
@@ -98,6 +101,9 @@ public class AddImpl implements Add {
 
 	}
 
+	/*
+	 * @see controller.Add#serchDoctor() searching doctor switch case
+	 */
 	@Override
 	public void serchDoctor() {
 		System.out.println("Enter choice to search doctor: ");
@@ -124,6 +130,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/*
+	 * @see controller.Add#searchPatient() searching patient switch case
+	 */
 	@Override
 	public void searchPatient() {
 		System.out.println("Enter choice to search Patient: ");
@@ -146,6 +155,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * search by doctor name
+	 */
 	private void searchDbyName() {
 		System.out.println("enter name to search doctor");
 		String name = Utility.inputString();
@@ -164,6 +176,9 @@ public class AddImpl implements Add {
 
 	}
 
+	/**
+	 * search by doctor id
+	 */
 	private void searchDbyId() {
 
 		System.out.println("enter ID to search doctor");
@@ -180,6 +195,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * search by doctor specialization
+	 */
 	private void searchDbySpecialization() {
 
 		System.out.println("enter specialization to search doctor");
@@ -196,6 +214,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * search by doctor availability
+	 */
 	private void searchDbyAvailability() {
 
 		System.out.println("enter availability to search doctor");
@@ -212,6 +233,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * search by patient name
+	 */
 	private void searchPbyName() {
 
 		System.out.println("enter name to search patient");
@@ -228,6 +252,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * search by patient id
+	 */
 	private void searchPbyId() {
 
 		System.out.println("enter Id to search patient");
@@ -244,6 +271,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * search by patient age
+	 */
 	private void searchPbyAge() {
 
 		System.out.println("enter Age to search patient");
@@ -260,6 +290,9 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/*
+	 * @see controller.Add#takeAppointment() take appointment
+	 */
 	@Override
 	public void takeAppointment() {
 		Appointment appointment = new Appointment();
@@ -311,6 +344,11 @@ public class AddImpl implements Add {
 		}
 	}
 
+	/**
+	 * @param file
+	 * @param clazz
+	 * @return file read
+	 */
 	public <T> List<T> fileReader(File file, Class<T> clazz) {
 		List<T> list = null;
 		BufferedReader bufferedReader;

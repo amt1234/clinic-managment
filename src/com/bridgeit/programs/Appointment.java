@@ -7,6 +7,7 @@ public class Appointment {
 	private int patientid;
 	private String doctorname;
 	private int doctorid;
+
 	public int getPatientid() {
 		return patientid;
 	}
@@ -22,8 +23,6 @@ public class Appointment {
 	public void setDoctorid(int doctorid) {
 		this.doctorid = doctorid;
 	}
-
-	
 
 	public String getDoctorname() {
 		return doctorname;
