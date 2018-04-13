@@ -1,3 +1,4 @@
+
 package com.bridgeit.programs;
 
 import com.bridgeit.utility.Utility;
@@ -8,8 +9,6 @@ public class CliniqueMain {
 
 	public static void main(String[] args) throws Exception {
 		Add add = new AddImpl();
-		add.readFileDoctor();
-		add.readFilePatient();
 		int ch = 0;
 		do {
 			System.out.println("----------------Cliniqe Management------------- ");

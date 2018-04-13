@@ -24,8 +24,9 @@ public class Utility {
 		try {
 			return scanner.nextInt();
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("Invalid input try again");
+			scanner.nextLine();
+			return inputInteger();
 		}
-		return 0;
 	}
 }

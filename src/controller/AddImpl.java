@@ -7,16 +7,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.JavaType;
 import org.codehaus.jackson.type.TypeReference;
 
 import com.bridgeit.utility.Utility;
+import com.bridgeit.programs.Appointment;
 import com.bridgeit.programs.Doctor;
 import com.bridgeit.programs.Patient;
 
@@ -27,7 +28,8 @@ public class AddImpl implements Add {
 	private static ObjectMapper objectMapper = new ObjectMapper();
 	private List<Patient> patientlist = new ArrayList<>();
 	private List<Doctor> doctorlist = new ArrayList<>();
-
+	private List<Appointment> appointmentlist = new ArrayList<>();
+	static int count = 0;
 	File file;
 	// List<String> lines = Files.readAllLines(Paths.get(file));
 	static String jsonArray;
@@ -36,7 +38,7 @@ public class AddImpl implements Add {
 	public void addDoctor() throws Exception {
 		Doctor doctor = new Doctor();
 		file = new File("Doctor.json");
-		
+		doctorlist = fileReader(file, Doctor.class);
 		System.out.println("Enter Doctor name :");
 		doctor.setDoctorname(Utility.inputString());
 		System.out.println("Enter Doctor id");
@@ -68,7 +70,7 @@ public class AddImpl implements Add {
 	public void addPatients() {
 		Patient patient = new Patient();
 		file = new File("Patient.json");
-		// patientlist = fileReader(file, Patient.class);
+		patientlist = fileReader(file, Patient.class);
 
 		System.out.println("Enter Petient name :");
 		patient.setPatientname(Utility.inputString());
@@ -149,7 +151,7 @@ public class AddImpl implements Add {
 		String name = Utility.inputString();
 
 		file = new File("Doctor.json");
-		// doctorlist = fileReader(file, Doctor.class);
+		doctorlist = fileReader(file, Doctor.class);
 
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(name)) {
@@ -160,22 +162,14 @@ public class AddImpl implements Add {
 			}
 		}
 
-		/*
-		 * Iterator<Doctor> iterator = doctorlist.iterator(); while
-		 * (iterator.hasNext()) {
-		 * 
-		 * Doctor temp = iterator.next(); //
-		 * System.out.println(temp.toString()); if
-		 * (temp.getDoctorname().equals(name)) {
-		 * System.out.print("Doctor found.. "); System.out.println(temp); } else
-		 * { System.out.println("Doctor not found.."); } }
-		 */
 	}
 
 	private void searchDbyId() {
 
 		System.out.println("enter ID to search doctor");
 		int id = Utility.inputInteger();
+		file = new File("Doctor.json");
+		doctorlist = fileReader(file, Doctor.class);
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(id)) {
 				System.out.print("Doctor found.. ");
@@ -190,6 +184,8 @@ public class AddImpl implements Add {
 
 		System.out.println("enter specialization to search doctor");
 		String specialization = Utility.inputString();
+		file = new File("Doctor.json");
+		doctorlist = fileReader(file, Doctor.class);
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(specialization)) {
 				System.out.print("Doctor found.. ");
@@ -204,6 +200,8 @@ public class AddImpl implements Add {
 
 		System.out.println("enter availability to search doctor");
 		String availablity = Utility.inputString();
+		file = new File("Doctor.json");
+		doctorlist = fileReader(file, Doctor.class);
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(availablity)) {
 				System.out.print("Doctor found.. ");
@@ -218,6 +216,8 @@ public class AddImpl implements Add {
 
 		System.out.println("enter name to search patient");
 		String name = Utility.inputString();
+		file = new File("Patient.json");
+		patientlist = fileReader(file, Patient.class);
 		for (Patient temp : patientlist) {
 			if (temp.getPatientname().equals(name)) {
 				System.out.print("Doctor found.. ");
@@ -232,6 +232,8 @@ public class AddImpl implements Add {
 
 		System.out.println("enter Id to search patient");
 		int id = Utility.inputInteger();
+		file = new File("Patient.json");
+		patientlist = fileReader(file, Patient.class);
 		for (Patient temp : patientlist) {
 			if (temp.getPatient_id() == (id)) {
 				System.out.print("Doctor found.. ");
@@ -246,6 +248,8 @@ public class AddImpl implements Add {
 
 		System.out.println("enter Age to search patient");
 		int age = Utility.inputInteger();
+		file = new File("Patient.json");
+		patientlist = fileReader(file, Patient.class);
 		for (Patient temp : patientlist) {
 			if (temp.getAge() == (age)) {
 				System.out.print("Doctor found.. ");
@@ -258,31 +262,68 @@ public class AddImpl implements Add {
 
 	@Override
 	public void takeAppointment() {
+		Appointment appointment = new Appointment();
 		System.out.println("Enter name of Patient for appointment");
-		String pname = Utility.inputString();
+		appointment.setPatientname(Utility.inputString());
+		System.out.println("Enter patient id");
+		appointment.setPatientid(Utility.inputInteger());
 		System.out.println("Enter name of Doctor for appointment");
-		String dname = Utility.inputString();
+		appointment.setDoctorname(Utility.inputString());
+		System.out.println("Enter id of Doctor for appointment");
+		appointment.setDoctorid(Utility.inputInteger());
+		System.out.println("Enter date for appointment");
+		appointment.setDate(Utility.inputString());
+		file = new File("Doctor.json");
+		doctorlist = fileReader(file, Doctor.class);
 		Iterator<Doctor> iterator = doctorlist.iterator();
 		while (iterator.hasNext()) {
 			Doctor temp = iterator.next();
-			if (temp.getDoctorname().equals(dname)) {
-				System.out.print("Patient found.. ");
+			if ((temp.getDoctorname().equals(appointment.getDoctorname()))
+					&& (temp.getDoctor_id() == (appointment.getDoctorid()))) {
+				System.out.print("Doctor found.. ");
 				System.out.println(temp);
+				if (count == 0) {
+					System.out.println("appointment fix");
+					count++;
+				} else if (count < 5) {
+					System.out.println("appointment fix");
+					count++;
+				} else {
+					System.out.println("Doctor is not available you try for next day..");
+				}
 			}
 		}
-		System.out.println("Enter date for appointment");
 
+		appointmentlist.add(appointment);
+
+		try {
+
+			String json = objectMapper.writeValueAsString(appointmentlist);
+			System.out.println(json);
+
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Appointment.json"));
+			bufferedWriter.write(json);
+			bufferedWriter.flush();
+			bufferedWriter.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void readFileDoctor() {
+	public <T> List<T> fileReader(File file, Class<T> clazz) {
+		List<T> list = null;
 		BufferedReader bufferedReader;
 		try {
 			jsonArray = "";
-			bufferedReader = new BufferedReader(new FileReader("Doctor.json"));
+			bufferedReader = new BufferedReader(new FileReader(file));
 			while ((jsonArray = bufferedReader.readLine()) != null) {
-				TypeReference<List<Doctor>> type = new TypeReference<List<Doctor>>() {
-				};
-				doctorlist = objectMapper.readValue(jsonArray, type);
+				System.out.println(jsonArray);
+
+				JavaType javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
+
+				list = objectMapper.readValue(jsonArray, javaType);
+
 			}
 			bufferedReader.close();
 
@@ -293,72 +334,6 @@ public class AddImpl implements Add {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void readFilePatient() {
-		BufferedReader bufferedReader;
-		try {
-			jsonArray = "";
-			bufferedReader = new BufferedReader(new FileReader("Patient.json"));
-			while ((jsonArray = bufferedReader.readLine()) != null) {
-				TypeReference<List<Patient>> type = new TypeReference<List<Patient>>() {
-				};
-				patientlist = objectMapper.readValue(jsonArray, type);
-			}
-			bufferedReader.close();
-
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return list;
 	}
 }
-
-// public <T> List<T> fileReader(File file, Class<T> clazz) {
-// List<T> list = null;
-// BufferedReader bufferedReader;
-// try {
-// jsonArray = "";
-// String line="";
-// bufferedReader = new BufferedReader(new FileReader(file));
-// while ((line = bufferedReader.readLine()) != null) {
-// jsonArray = jsonArray+line;
-// System.out.println(jsonArray);
-//
-// TypeReference<List<T>> type = new TypeReference<List<T>>() {
-// };
-// list = objectMapper.readValue(jsonArray, type);
-//
-// }
-// //list = (List<T>) objectMapper.readValue(jsonArray, clazz);
-// bufferedReader.close();
-//
-// } catch (JsonParseException e) {
-// e.printStackTrace();
-// } catch (JsonMappingException e) {
-// e.printStackTrace();
-// } catch (IOException e) {
-// e.printStackTrace();
-// }
-// return list;
-// }
-
-// public <T> List<T> writeFile(File file,Class<T> class1) {
-// try {
-//
-// String json = objectMapper.writeValueAsString(list);
-// System.out.println(json);
-//
-// BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-// bufferedWriter.write(json);
-// bufferedWriter.flush();
-// bufferedWriter.close();
-//
-// } catch (IOException e) {
-// e.printStackTrace();
-// }
-// return list;
-// }
