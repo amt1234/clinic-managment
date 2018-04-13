@@ -2,7 +2,7 @@ package com.bridgeit.programs;
 
 public class Patient {
 	private String patientname;
-	private int patient_id;
+	private int patientId;
 	private int mobileNumber;
 	private int age;
 
@@ -14,12 +14,12 @@ public class Patient {
 		this.patientname = patientname;
 	}
 
-	public int getPatient_id() {
-		return patient_id;
+	public int getPatientId() {
+		return patientId;
 	}
 
-	public void setPatient_id(int patient_id) {
-		this.patient_id = patient_id;
+	public void setPatientId(int patient_id) {
+		this.patientId = patient_id;
 	}
 
 	public int getMobileNumber() {
@@ -40,7 +40,7 @@ public class Patient {
 
 	@Override
 	public String toString() {
-		return "Patient [patientname=" + patientname + ", patient_id=" + patient_id + ", mobileNumber=" + mobileNumber
+		return "Patient [patientname=" + patientname + ", patient_id=" + patientId + ", mobileNumber=" + mobileNumber
 				+ ", age=" + age + "]";
 	}
 

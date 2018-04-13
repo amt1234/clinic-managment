@@ -5,6 +5,15 @@ public class Doctor {
 	private String doctorname;
 	private String specialization;
 	private String availability;
+	private int nopatient;
+
+	public int getNopatient() {
+		return nopatient;
+	}
+
+	public void setNopatient(int nopatient) {
+		this.nopatient = nopatient;
+	}
 
 	public int getDoctor_id() {
 		return doctor_id;
@@ -41,7 +50,6 @@ public class Doctor {
 	@Override
 	public String toString() {
 		return "Doctor [doctor_id=" + doctor_id + ", doctorname=" + doctorname + ", specialization=" + specialization
-				+ ", availability=" + availability + "]";
+				+ ", availability=" + availability + ", nopatient=" + nopatient + "]";
 	}
-
 }

@@ -8,6 +8,7 @@ public class Appointment {
 	private String doctorname;
 	private int doctorid;
 
+	
 	public int getPatientid() {
 		return patientid;
 	}
@@ -47,4 +48,10 @@ public class Appointment {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	@Override
+	public String toString() {
+		return "Appointment [date=" + date + ", patientname=" + patientname + ", patientid=" + patientid
+				+ ", doctorname=" + doctorname + ", doctorid=" + doctorid + "]";
+	}
+
 }

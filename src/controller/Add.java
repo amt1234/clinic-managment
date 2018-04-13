@@ -1,6 +1,11 @@
 /*Interface class*/
 package controller;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+
 public interface Add {
 	
 	public void addDoctor() throws Exception;
@@ -11,6 +16,6 @@ public interface Add {
 
 	public void searchPatient();
 
-	public void takeAppointment();
+	public void takeAppointment() throws JsonGenerationException, JsonMappingException, IOException;
 
 }

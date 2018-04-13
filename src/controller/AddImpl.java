@@ -1,15 +1,14 @@
 package controller;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -22,23 +21,20 @@ import com.bridgeit.programs.Patient;
 
 public class AddImpl implements Add {
 
-	Utility utility = new Utility();
-
-	private static ObjectMapper objectMapper = new ObjectMapper();
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
 	private List<Patient> patientlist = new ArrayList<>();
 	private List<Doctor> doctorlist = new ArrayList<>();
 	private List<Appointment> appointmentlist = new ArrayList<>();
 	static int count = 0;
-	static String jsonArray;
-	File file;
 
 	/*
-	 * @see controller.Add#addDoctor() add doctors
+	 * add doctors
 	 */
 	@Override
 	public void addDoctor() throws Exception {
 		Doctor doctor = new Doctor();
-		file = new File("Doctor.json");
+		File file = new File("Doctor.json");
 		doctorlist = fileReader(file, Doctor.class);
 		System.out.println("Enter Doctor name :");
 		doctor.setDoctorname(Utility.inputString());
@@ -50,50 +46,36 @@ public class AddImpl implements Add {
 		doctor.setAvailability(Utility.inputString());
 		doctorlist.add(doctor);
 
+		System.out.println(doctorlist);
 		try {
-
-			String json = objectMapper.writeValueAsString(doctorlist);
-			System.out.println(json);
-
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Doctor.json"));
-			bufferedWriter.write(json);
-			bufferedWriter.flush();
-			bufferedWriter.close();
+			objectMapper.writeValue(file, doctorlist);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/*
-	 * @see controller.Add#addPatients() add patients
+	 * add patients
 	 */
 	@Override
 	public void addPatients() {
 		Patient patient = new Patient();
-		file = new File("Patient.json");
+		File file = new File("Patient.json");
 		patientlist = fileReader(file, Patient.class);
 
 		System.out.println("Enter Petient name :");
 		patient.setPatientname(Utility.inputString());
 		System.out.println("Enter Petient ID :");
-		patient.setPatient_id(Utility.inputInteger());
+		patient.setPatientId(Utility.inputInteger());
 		System.out.println("Enter Patient Mobile Number :");
 		patient.setMobileNumber(Utility.inputInteger());
 		System.out.println("Enter Patient Age :");
 		patient.setAge(Utility.inputInteger());
 		patientlist.add(patient);
-
+		System.out.println(patientlist);
 		try {
-
-			String json = objectMapper.writeValueAsString(patientlist);
-			System.out.println(json);
-
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Patient.json"));
-			bufferedWriter.write(json);
-			bufferedWriter.flush();
-			bufferedWriter.close();
+			objectMapper.writeValue(file, doctorlist);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -102,7 +84,7 @@ public class AddImpl implements Add {
 	}
 
 	/*
-	 * @see controller.Add#serchDoctor() searching doctor switch case
+	 * searching doctor switch case
 	 */
 	@Override
 	public void serchDoctor() {
@@ -131,7 +113,7 @@ public class AddImpl implements Add {
 	}
 
 	/*
-	 * @see controller.Add#searchPatient() searching patient switch case
+	 * searching patient switch case
 	 */
 	@Override
 	public void searchPatient() {
@@ -161,17 +143,20 @@ public class AddImpl implements Add {
 	private void searchDbyName() {
 		System.out.println("enter name to search doctor");
 		String name = Utility.inputString();
-
-		file = new File("Doctor.json");
+		boolean found = false;
+		File file = new File("Doctor.json");
 		doctorlist = fileReader(file, Doctor.class);
-
+		System.out.println(doctorlist);
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(name)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("doctor not found");
 		}
 
 	}
@@ -183,15 +168,20 @@ public class AddImpl implements Add {
 
 		System.out.println("enter ID to search doctor");
 		int id = Utility.inputInteger();
-		file = new File("Doctor.json");
+		boolean found = false;
+		File file = new File("Doctor.json");
 		doctorlist = fileReader(file, Doctor.class);
+		System.out.println(doctorlist);
 		for (Doctor temp : doctorlist) {
-			if (temp.getDoctorname().equals(id)) {
+			if (temp.getDoctor_id() == (id)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("doctor not found");
 		}
 	}
 
@@ -202,15 +192,20 @@ public class AddImpl implements Add {
 
 		System.out.println("enter specialization to search doctor");
 		String specialization = Utility.inputString();
-		file = new File("Doctor.json");
+		boolean found = false;
+		File file = new File("Doctor.json");
 		doctorlist = fileReader(file, Doctor.class);
+		System.out.println(doctorlist);
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(specialization)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("doctor not found");
 		}
 	}
 
@@ -221,15 +216,19 @@ public class AddImpl implements Add {
 
 		System.out.println("enter availability to search doctor");
 		String availablity = Utility.inputString();
-		file = new File("Doctor.json");
+		File file = new File("Doctor.json");
+		boolean found = false;
 		doctorlist = fileReader(file, Doctor.class);
 		for (Doctor temp : doctorlist) {
 			if (temp.getDoctorname().equals(availablity)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("doctor not found");
 		}
 	}
 
@@ -240,15 +239,19 @@ public class AddImpl implements Add {
 
 		System.out.println("enter name to search patient");
 		String name = Utility.inputString();
-		file = new File("Patient.json");
+		File file = new File("Patient.json");
+		boolean found = false;
 		patientlist = fileReader(file, Patient.class);
 		for (Patient temp : patientlist) {
 			if (temp.getPatientname().equals(name)) {
-				System.out.print("Doctor found.. ");
+				System.out.print("Patient found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("Patient not found");
 		}
 	}
 
@@ -259,15 +262,19 @@ public class AddImpl implements Add {
 
 		System.out.println("enter Id to search patient");
 		int id = Utility.inputInteger();
-		file = new File("Patient.json");
+		File file = new File("Patient.json");
+		boolean found = false;
 		patientlist = fileReader(file, Patient.class);
 		for (Patient temp : patientlist) {
-			if (temp.getPatient_id() == (id)) {
-				System.out.print("Doctor found.. ");
+			if (temp.getPatientId() == (id)) {
+				System.out.print("Patient found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("Patient not found");
 		}
 	}
 
@@ -278,24 +285,29 @@ public class AddImpl implements Add {
 
 		System.out.println("enter Age to search patient");
 		int age = Utility.inputInteger();
-		file = new File("Patient.json");
+		File file = new File("Patient.json");
+		boolean found = false;
 		patientlist = fileReader(file, Patient.class);
 		for (Patient temp : patientlist) {
 			if (temp.getAge() == (age)) {
-				System.out.print("Doctor found.. ");
+				System.out.print("Patient found.. ");
 				System.out.println(temp);
-			} else {
-				System.out.println("Doctor not found..");
+				found = true;
+				break;
 			}
+		}
+		if (!found) {
+			System.out.println("Patient not found");
 		}
 	}
 
 	/*
-	 * @see controller.Add#takeAppointment() take appointment
+	 * take appointment
 	 */
 	@Override
-	public void takeAppointment() {
+	public void takeAppointment() throws JsonGenerationException, JsonMappingException, IOException {
 		Appointment appointment = new Appointment();
+		Doctor doctor = new Doctor();
 		System.out.println("Enter name of Patient for appointment");
 		appointment.setPatientname(Utility.inputString());
 		System.out.println("Enter patient id");
@@ -306,8 +318,10 @@ public class AddImpl implements Add {
 		appointment.setDoctorid(Utility.inputInteger());
 		System.out.println("Enter date for appointment");
 		appointment.setDate(Utility.inputString());
-		file = new File("Doctor.json");
+		File file = new File("Doctor.json");
 		doctorlist = fileReader(file, Doctor.class);
+		File file1 = new File("Appointment.json");
+		appointmentlist = fileReader(file1, Appointment.class);
 		Iterator<Doctor> iterator = doctorlist.iterator();
 		while (iterator.hasNext()) {
 			Doctor temp = iterator.next();
@@ -315,30 +329,26 @@ public class AddImpl implements Add {
 					&& (temp.getDoctor_id() == (appointment.getDoctorid()))) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
-				if (count == 0) {
-					System.out.println("appointment fix");
-					count++;
-				} else if (count < 5) {
-					System.out.println("appointment fix");
-					count++;
+				if (doctor.getNopatient() <=5) {
+					System.out.println("Appointment fix..");
+					doctor.setNopatient(doctor.getNopatient()+1);
+//					int n=doctor.getNopatient();
+//					doctor.setNopatient(n+1);
+//					System.out.println(n);
+					System.out.println("hello");
+					objectMapper.writeValue(file, doctorlist);
+					appointmentlist.add(appointment);
+					break;
 				} else {
 					System.out.println("Doctor is not available you try for next day..");
+					doctor.setNopatient(0);
+					objectMapper.writeValue(file, doctorlist);
 				}
 			}
 		}
 
-		appointmentlist.add(appointment);
-
 		try {
-
-			String json = objectMapper.writeValueAsString(appointmentlist);
-			System.out.println(json);
-
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Appointment.json"));
-			bufferedWriter.write(json);
-			bufferedWriter.flush();
-			bufferedWriter.close();
-
+			objectMapper.writeValue(file1, appointmentlist);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -351,19 +361,11 @@ public class AddImpl implements Add {
 	 */
 	public <T> List<T> fileReader(File file, Class<T> clazz) {
 		List<T> list = null;
-		BufferedReader bufferedReader;
 		try {
-			jsonArray = "";
-			bufferedReader = new BufferedReader(new FileReader(file));
-			while ((jsonArray = bufferedReader.readLine()) != null) {
-				System.out.println(jsonArray);
 
-				JavaType javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
+			JavaType javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
 
-				list = objectMapper.readValue(jsonArray, javaType);
-
-			}
-			bufferedReader.close();
+			list = objectMapper.readValue(file, javaType);
 
 		} catch (JsonParseException e) {
 			e.printStackTrace();

@@ -3,11 +3,7 @@ package com.bridgeit.utility;
 import java.util.Scanner;
 
 public class Utility {
-	static Scanner scanner;
-
-	public Utility() {
-		scanner = new Scanner(System.in);
-	}
+	private static Scanner scanner = new Scanner(System.in);;
 
 	// INPUT STRING
 	public static String inputString() {
