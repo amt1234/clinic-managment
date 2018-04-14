@@ -18,8 +18,8 @@ public class Patient {
 		return patientId;
 	}
 
-	public void setPatientId(int patient_id) {
-		this.patientId = patient_id;
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
 	public int getMobileNumber() {
@@ -40,7 +40,7 @@ public class Patient {
 
 	@Override
 	public String toString() {
-		return "Patient [patientname=" + patientname + ", patient_id=" + patientId + ", mobileNumber=" + mobileNumber
+		return "Patient [patientname=" + patientname + ", patientId=" + patientId + ", mobileNumber=" + mobileNumber
 				+ ", age=" + age + "]";
 	}
 

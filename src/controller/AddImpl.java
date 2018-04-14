@@ -75,7 +75,7 @@ public class AddImpl implements Add {
 		patientlist.add(patient);
 		System.out.println(patientlist);
 		try {
-			objectMapper.writeValue(file, doctorlist);
+			objectMapper.writeValue(file, patientlist);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -191,13 +191,13 @@ public class AddImpl implements Add {
 	private void searchDbySpecialization() {
 
 		System.out.println("enter specialization to search doctor");
-		String specialization = Utility.inputString();
+		String specializations = Utility.inputString();
 		boolean found = false;
 		File file = new File("Doctor.json");
 		doctorlist = fileReader(file, Doctor.class);
 		System.out.println(doctorlist);
 		for (Doctor temp : doctorlist) {
-			if (temp.getDoctorname().equals(specialization)) {
+			if (temp.getSpecialization().equals(specializations)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
 				found = true;
@@ -220,7 +220,7 @@ public class AddImpl implements Add {
 		boolean found = false;
 		doctorlist = fileReader(file, Doctor.class);
 		for (Doctor temp : doctorlist) {
-			if (temp.getDoctorname().equals(availablity)) {
+			if (temp.getAvailability().equals(availablity)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
 				found = true;
@@ -331,15 +331,13 @@ public class AddImpl implements Add {
 				if (temp.getNopatient() <=5) {
 					System.out.println("Appointment fix..");
 					temp.setNopatient(temp.getNopatient()+1);
-//					int n=doctor.getNopatient();
-//					doctor.setNopatient(n+1);
-//					System.out.println(n);
 					System.out.println("hello");
 					objectMapper.writeValue(file, doctorlist);
 					appointmentlist.add(appointment);
 					break;
 				} else {
 					System.out.println("Doctor is not available you try for next day..");
+					System.out.println("Doctor "+temp.getDoctorname()+"is a popular in the Clinique . ");
 					temp.setNopatient(0);
 					objectMapper.writeValue(file, doctorlist);
 				}
