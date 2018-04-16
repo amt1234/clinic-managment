@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,13 +15,13 @@ import com.bridgeit.programs.Appointment;
 import com.bridgeit.programs.Doctor;
 import com.bridgeit.programs.Patient;
 
-public class AddImpl  {
+public class AddImpl {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
-	private List<Patient> patientlist = new ArrayList<>();
-	private List<Doctor> doctorlist = new ArrayList<>();
-	private List<Appointment> appointmentlist = new ArrayList<>();
+	private List<Patient> patients;
+	private List<Doctor> doctors;
+	private List<Appointment> appointments;
 
 	/*
 	 * add doctors
@@ -30,7 +29,9 @@ public class AddImpl  {
 	public void addDoctor() throws Exception {
 
 		File file = new File("Doctor.json");
-		doctorlist = fileReader(file, Doctor.class);
+		if (doctors == null) {
+			doctors = fileReader(file, Doctor.class);
+		}
 
 		Doctor doctor = new Doctor();
 
@@ -46,11 +47,11 @@ public class AddImpl  {
 		System.out.println("Enter Doctor Availiability");
 		doctor.setAvailability(Utility.inputString());
 
-		doctorlist.add(doctor);
+		doctors.add(doctor);
 
-		System.out.println(doctorlist);
+		System.out.println(doctors);
 		try {
-			objectMapper.writeValue(file, doctorlist);
+			objectMapper.writeValue(file, doctors);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,7 +62,9 @@ public class AddImpl  {
 	 */
 	public void addPatients() {
 		File file = new File("Patient.json");
-		patientlist = fileReader(file, Patient.class);
+		if (doctors == null) {
+			patients = fileReader(file, Patient.class);
+		}
 
 		Patient patient = new Patient();
 
@@ -77,11 +80,11 @@ public class AddImpl  {
 		System.out.println("Enter Patient Age :");
 		patient.setAge(Utility.inputInteger());
 
-		patientlist.add(patient);
+		patients.add(patient);
 
-		System.out.println(patientlist);
+		System.out.println(patients);
 		try {
-			objectMapper.writeValue(file, patientlist);
+			objectMapper.writeValue(file, patients);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -154,10 +157,13 @@ public class AddImpl  {
 		boolean found = false;
 
 		File file = new File("Doctor.json");
-		doctorlist = fileReader(file, Doctor.class);
-		System.out.println(doctorlist);
 
-		for (Doctor doctor : doctorlist) {
+		if (doctors == null) {
+			doctors = fileReader(file, Doctor.class);
+		}
+		System.out.println(doctors);
+
+		for (Doctor doctor : doctors) {
 			if (doctor.getDoctorname().equals(name)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(doctor);
@@ -182,10 +188,12 @@ public class AddImpl  {
 		boolean found = false;
 
 		File file = new File("Doctor.json");
-		doctorlist = fileReader(file, Doctor.class);
-		System.out.println(doctorlist);
+		if (doctors == null) {
+			doctors = fileReader(file, Doctor.class);
+		}
+		System.out.println(doctors);
 
-		for (Doctor doctor : doctorlist) {
+		for (Doctor doctor : doctors) {
 			if (doctor.getDoctorId() == (id)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(doctor);
@@ -209,10 +217,12 @@ public class AddImpl  {
 		boolean found = false;
 
 		File file = new File("Doctor.json");
-		doctorlist = fileReader(file, Doctor.class);
-		System.out.println(doctorlist);
+		if (doctors == null) {
+			doctors = fileReader(file, Doctor.class);
+		}
+		System.out.println(doctors);
 
-		for (Doctor temp : doctorlist) {
+		for (Doctor temp : doctors) {
 			if (temp.getSpecialization().equals(specializations)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
@@ -235,10 +245,12 @@ public class AddImpl  {
 		String availablity = Utility.inputString();
 
 		File file = new File("Doctor.json");
-		doctorlist = fileReader(file, Doctor.class);
+		if (doctors == null) {
+			doctors = fileReader(file, Doctor.class);
+		}
 
 		boolean found = false;
-		for (Doctor temp : doctorlist) {
+		for (Doctor temp : doctors) {
 			if (temp.getAvailability().equals(availablity)) {
 				System.out.print("Doctor found.. ");
 				System.out.println(temp);
@@ -260,10 +272,12 @@ public class AddImpl  {
 		String name = Utility.inputString();
 
 		File file = new File("Patient.json");
-		patientlist = fileReader(file, Patient.class);
+		if (patients == null) {
+			patients = fileReader(file, Patient.class);
+		}
 
 		boolean found = false;
-		for (Patient temp : patientlist) {
+		for (Patient temp : patients) {
 			if (temp.getPatientname().equals(name)) {
 				System.out.print("Patient found.. ");
 				System.out.println(temp);
@@ -285,10 +299,12 @@ public class AddImpl  {
 		int id = Utility.inputInteger();
 
 		File file = new File("Patient.json");
-		patientlist = fileReader(file, Patient.class);
+		if (patients == null) {
+			patients = fileReader(file, Patient.class);
+		}
 
 		boolean found = false;
-		for (Patient temp : patientlist) {
+		for (Patient temp : patients) {
 			if (temp.getPatientId() == (id)) {
 				System.out.print("Patient found.. ");
 				System.out.println(temp);
@@ -309,10 +325,12 @@ public class AddImpl  {
 		int age = Utility.inputInteger();
 
 		File file = new File("Patient.json");
-		patientlist = fileReader(file, Patient.class);
+		if (patients == null) {
+			patients = fileReader(file, Patient.class);
+		}
 
 		boolean found = false;
-		for (Patient temp : patientlist) {
+		for (Patient temp : patients) {
 			if (temp.getAge() == (age)) {
 				System.out.print("Patient found.. ");
 				System.out.println(temp);
@@ -347,12 +365,12 @@ public class AddImpl  {
 		appointment.setDate(Utility.inputString());
 
 		File doctorFile = new File("Doctor.json");
-		doctorlist = fileReader(doctorFile, Doctor.class);
+		doctors = fileReader(doctorFile, Doctor.class);
 
 		File appointmentFile = new File("Appointment.json");
-		appointmentlist = fileReader(appointmentFile, Appointment.class);
+		appointments = fileReader(appointmentFile, Appointment.class);
 
-		Iterator<Doctor> iterator = doctorlist.iterator();
+		Iterator<Doctor> iterator = doctors.iterator();
 		while (iterator.hasNext()) {
 			Doctor doctor = iterator.next();
 
@@ -365,29 +383,29 @@ public class AddImpl  {
 					System.out.println("Appointment fix..");
 					doctor.setNopatient(doctor.getNopatient() + 1);
 					System.out.println("hello");
-					objectMapper.writeValue(doctorFile, doctorlist);
-					appointmentlist.add(appointment);
+					objectMapper.writeValue(doctorFile, doctors);
+					appointments.add(appointment);
 					break;
 				} else {
 					System.out.println("Doctor is not available you try for next day..");
 					System.out.println("Doctor " + doctor.getDoctorname() + " is a popular in the Clinique . ");
 					doctor.setNopatient(0);
-					objectMapper.writeValue(doctorFile, doctorlist);
+					objectMapper.writeValue(doctorFile, doctors);
 				}
 			}
 		}
 
 		try {
-			objectMapper.writeValue(appointmentFile, appointmentlist);
+			objectMapper.writeValue(appointmentFile, appointments);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public void displayReport()
-	{
+
+	public void displayReport() {
 		File file = new File("Appointment.json");
-		appointmentlist = fileReader(file, Appointment.class);
-		System.out.println(appointmentlist);
+		appointments = fileReader(file, Appointment.class);
+		System.out.println(appointments);
 	}
 
 	/**
