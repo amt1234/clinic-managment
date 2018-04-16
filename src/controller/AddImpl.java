@@ -16,7 +16,7 @@ import com.bridgeit.programs.Appointment;
 import com.bridgeit.programs.Doctor;
 import com.bridgeit.programs.Patient;
 
-public class AddImpl implements Add {
+public class AddImpl  {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -27,7 +27,6 @@ public class AddImpl implements Add {
 	/*
 	 * add doctors
 	 */
-	@Override
 	public void addDoctor() throws Exception {
 
 		File file = new File("Doctor.json");
@@ -60,7 +59,6 @@ public class AddImpl implements Add {
 	/*
 	 * add patients
 	 */
-	@Override
 	public void addPatients() {
 		File file = new File("Patient.json");
 		patientlist = fileReader(file, Patient.class);
@@ -93,7 +91,6 @@ public class AddImpl implements Add {
 	/*
 	 * searching doctor switch case
 	 */
-	@Override
 	public void serchDoctor() {
 		System.out.println("Enter choice to search doctor: ");
 		System.out.println("1. search by name");
@@ -124,7 +121,6 @@ public class AddImpl implements Add {
 	/*
 	 * searching patient switch case
 	 */
-	@Override
 	public void searchPatient() {
 		System.out.println("Enter choice to search Patient: ");
 		System.out.println("1. search by name");
@@ -332,7 +328,6 @@ public class AddImpl implements Add {
 	/*
 	 * take appointment
 	 */
-	@Override
 	public void takeAppointment() throws JsonGenerationException, JsonMappingException, IOException {
 		Appointment appointment = new Appointment();
 
@@ -387,6 +382,12 @@ public class AddImpl implements Add {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void displayReport()
+	{
+		File file = new File("Appointment.json");
+		appointmentlist = fileReader(file, Appointment.class);
+		System.out.println(appointmentlist);
 	}
 
 	/**

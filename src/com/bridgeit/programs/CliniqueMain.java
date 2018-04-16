@@ -2,13 +2,12 @@
 package com.bridgeit.programs;
 
 import com.bridgeit.utility.Utility;
-import controller.Add;
 import controller.AddImpl;
 
 public class CliniqueMain {
 
 	public static void main(String[] args) throws Exception {
-		Add add = new AddImpl();
+		AddImpl addImpl = new AddImpl();
 		int ch = 0;
 		do {
 			System.out.println("----------------Cliniqe Management------------- ");
@@ -23,22 +22,22 @@ public class CliniqueMain {
 			int choice = Utility.inputInteger();
 			switch (choice) {
 			case 1:
-				add.addDoctor();
+				addImpl.addDoctor();
 				break;
 			case 2:
-				add.addPatients();
+				addImpl.addPatients();
 				break;
 			case 3:
-				add.serchDoctor();
+				addImpl.serchDoctor();
 				break;
 			case 4:
-				add.searchPatient();
+				addImpl.searchPatient();
 				break;
 			case 5:
-				add.takeAppointment();
+				addImpl.takeAppointment();
 				break;
 			case 6:
-				System.out.println("display report");
+				addImpl.displayReport();
 				break;
 			case 7:
 				System.exit(0);
