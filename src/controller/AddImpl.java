@@ -118,6 +118,7 @@ public class AddImpl {
 			break;
 		default:
 			System.out.println("Invalid choice");
+			break;
 		}
 	}
 
@@ -144,6 +145,7 @@ public class AddImpl {
 			break;
 		default:
 			System.out.println("Invalid Choice");
+			break;
 		}
 	}
 
