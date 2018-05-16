@@ -43,6 +43,7 @@ public class CliniqueMain {
 				System.exit(0);
 			default:
 				System.out.println("Invalid choice ");
+				break;
 			}
 		} while (ch != 8);
 
